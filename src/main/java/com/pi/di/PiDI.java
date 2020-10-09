@@ -11,14 +11,14 @@ public class PiDI {
         init();
     }
 
-    private void init(){
+    private void init() {
         PiValidation piValidation = new com.pi.applicationcore.validation.PiValidation();
         PiCalculationService piCalculationService = new com.pi.applicationcore.services.PiCalculationService();
 
         _piBusiness = new com.pi.applicationcore.business.PiBusiness(piCalculationService, piValidation);
     }
 
-    public PiBusiness getPiBusiness(){
+    public PiBusiness getPiBusiness() {
         return _piBusiness;
     }
 

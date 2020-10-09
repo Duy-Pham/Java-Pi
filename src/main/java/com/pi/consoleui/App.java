@@ -7,15 +7,14 @@ import com.pi.di.PiDI;
 
 public class App {
 
-    public static void main( String[] args )
-    {
+    public static void main(String[] args) {
         // tasks need to do
         // 1. User can input long value()
         // 2. Validation data of user (need a number)
         // 3. Algorithm to get result
         // 4. Print to screen
 
-        System.out.print( "Please input your n : " );
+        System.out.print("Please input your n : ");
 
         PiDI di = new PiDI();
         PiBusiness piBus = di.getPiBusiness();
@@ -24,10 +23,9 @@ public class App {
         piRequest.setRawNumber("9876543219");
         PiResponseResult piResponseResult = piBus.exec(piRequest);
 
-        if (piResponseResult.getError() != null){
+        if (piResponseResult.getError() != null) {
             System.out.println(piResponseResult.getError().getMessage());
-        }
-        else {
+        } else {
             System.out.println("Ket qua : " + piResponseResult.getValue());
         }
 

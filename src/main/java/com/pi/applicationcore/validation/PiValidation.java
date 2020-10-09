@@ -9,7 +9,7 @@ public class PiValidation implements com.pi.applicationcore.interfaces.PiValidat
     public PiResponseResult validate(PiRequest request) {
         PiResponseResult result = new PiResponseResult();
         long value = tryParse(request.getRawNumber(), -1);
-        if (value == -1){
+        if (value == -1) {
             Error error = new Error("Your input is not correct.");
             result.setError(error);
         }

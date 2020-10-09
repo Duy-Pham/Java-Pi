@@ -9,7 +9,7 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusiness 
     private final PiCalculationService _piCalculation;
     private final PiValidation _piValidation;
 
-    public PiBusiness(PiCalculationService piCalculation, PiValidation validationPi){
+    public PiBusiness(PiCalculationService piCalculation, PiValidation validationPi) {
         _piCalculation = piCalculation;
         _piValidation = validationPi;
     }
@@ -17,7 +17,7 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusiness 
     @Override
     public PiResponseResult exec(PiRequest request) {
         PiResponseResult res = _piValidation.validate(request);
-        if(res.getError() == null){
+        if (res.getError() == null) {
             res = _piCalculation.exec(request);
         }
         return res;

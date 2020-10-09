@@ -21,8 +21,8 @@ public class PiCalculationService implements com.pi.applicationcore.interfaces.P
 
         ArrayList<PiCalculationServiceThread> piCalculationServiceThreads = new ArrayList<PiCalculationServiceThread>();
 
-        for(int i = 0; i < procNb; i++){
-            piCalculationServiceThreads.add(new PiCalculationServiceThread(i + 1,procNb, request.getValue()));
+        for (int i = 0; i < procNb; i++) {
+            piCalculationServiceThreads.add(new PiCalculationServiceThread(i + 1, procNb, request.getValue()));
         }
 
         try {
