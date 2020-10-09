@@ -8,7 +8,13 @@ public class PiCalculation {
         BigInteger res = new BigInteger("0");
         BigInteger i = new BigInteger("0");
 
-        //seperate to 2 arrays
+        double re = 1.0;
+        for(int j = 1; j < 10; j+=2) {
+            re += 1.0/((j * 2) + 1.0);
+        }
+        for(int j = 2; j < 10; j+=2) {
+            re += -1.0/((j * 2) + 1.0);
+        }
 
         for (; i.compareTo(n) < 1; i.add(new BigInteger("1"))) {
             BigInteger s = i.multiply(new BigInteger("2")).add(new BigInteger("1"));
