@@ -3,7 +3,7 @@ package com.pi.consoleui;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
 import com.pi.applicationcore.interfaces.PiBusiness;
-import com.pi.factory.PiFactory;
+import com.pi.di.PiDI;
 
 import java.util.Scanner;
 
@@ -14,7 +14,7 @@ public class App {
         System.out.print("Please input your number : ");
         String number = in.nextLine();
 
-        PiFactory di = new PiFactory();
+        PiDI di = new PiDI();
         PiBusiness piBus = di.getPiBusiness();
 
         PiRequest piRequest = new PiRequest();

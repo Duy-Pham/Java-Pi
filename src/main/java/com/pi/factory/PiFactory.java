@@ -1,15 +1,15 @@
-package com.pi.di;
+package com.pi.factory;
 
 import com.pi.applicationcore.interfaces.PiBusiness;
 import com.pi.applicationcore.interfaces.PiCalculationService;
 import com.pi.applicationcore.interfaces.PiValidation;
 
-public class PiDI {
+public class PiFactory {
     private PiBusiness _piBusiness;
     private PiValidation _piValidation;
     private PiCalculationService _piCalculationService;
 
-    public PiDI() {
+    public PiFactory() {
         init();
     }
 

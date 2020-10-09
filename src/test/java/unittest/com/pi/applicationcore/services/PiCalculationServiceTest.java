@@ -14,7 +14,7 @@ public class PiCalculationServiceTest extends BaseTest {
 
     @Test
     public void execTestSuccess(){
-        PiCalculationService piCalculationService = piDI.getPiCalculationService();
+        PiCalculationService piCalculationService = piFactory.getPiCalculationService();
 
         PiRequest piRequest = new PiRequest();
         piRequest.setRawNumber("123456");
