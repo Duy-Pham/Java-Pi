@@ -3,6 +3,6 @@ package com.pi.applicationcore.interfaces;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
 
-public interface IPiCalculationService {
+public interface PiCalculationService {
     PiResponseResult exec(PiRequest request);
 }

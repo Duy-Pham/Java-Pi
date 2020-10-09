@@ -8,6 +8,8 @@ public class PiCalculation {
         BigInteger res = new BigInteger("0");
         BigInteger i = new BigInteger("0");
 
+        //seperate to 2 arrays
+
         for(; i.compareTo(n) < 1; i.add(new BigInteger("1"))) {
             BigInteger s = i.multiply(new BigInteger("2")).add(new BigInteger("1"));
             if(isEvenNumber(i)){

@@ -1,7 +1,6 @@
 package com.pi.di;
 
-import com.pi.applicationcore.business.PiBusiness;
-import com.pi.applicationcore.interfaces.IPiBusiness;
+import com.pi.applicationcore.interfaces.PiBusiness;
 
 public class BaseDI {
     public BaseDI() {
@@ -18,7 +17,7 @@ public class BaseDI {
 //        PiBusiness pi = new PiBusiness()
     }
 
-    public IPiBusiness getPiBusiness(){
+    public PiBusiness getPiBusiness(){
 
         return null;
     }

@@ -2,17 +2,16 @@ package com.pi.applicationcore.business;
 
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
-import com.pi.applicationcore.interfaces.IPiBusiness;
-import com.pi.applicationcore.interfaces.IPiCalculationService;
-import com.pi.applicationcore.interfaces.IPiValidation;
+import com.pi.applicationcore.interfaces.PiCalculationService;
+import com.pi.applicationcore.interfaces.PiValidation;
 
-public class PiBusiness implements IPiBusiness {
-    private final IPiCalculationService _piCalculation;
-    private final IPiValidation _piValidation;
+public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusiness {
+    private final PiCalculationService _piCalculation;
+    private final PiValidation _piValidation;
 
-    public PiBusiness(IPiCalculationService piCalculation, IPiValidation piValidation){
+    public PiBusiness(PiCalculationService piCalculation, PiValidation validationPi){
         _piCalculation = piCalculation;
-        _piValidation = piValidation;
+        _piValidation = validationPi;
     }
 
     @Override
