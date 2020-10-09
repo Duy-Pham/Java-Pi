@@ -17,7 +17,7 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusiness 
     @Override
     public PiResponseResult exec(PiRequest request) {
         PiResponseResult res = _piValidation.validate(request);
-        if(res.getStatus() == false){
+        if(res.getError() == null){
             res = _piCalculation.exec(request);
         }
         return res;

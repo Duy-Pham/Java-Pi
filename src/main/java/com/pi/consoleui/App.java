@@ -3,19 +3,9 @@ package com.pi.consoleui;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
 import com.pi.applicationcore.interfaces.PiBusiness;
-import com.pi.di.BaseDI;
-import com.pi.lib.PiCalculation;
-
-import java.math.BigInteger;
+import com.pi.di.PiDI;
 
 public class App {
-//    private final IPiBusiness _piBusiness;
-//    private final IPiValidation _piValidation;
-//
-//    public App(IPiBusiness piBusiness, IPiValidation piValidation){
-//        _piBusiness = piBusiness;
-//        _piValidation = piValidation;
-//    }
 
     public static void main( String[] args )
     {
@@ -27,22 +17,21 @@ public class App {
 
         System.out.print( "Please input your n : " );
 
-        BaseDI di = new BaseDI();
+        PiDI di = new PiDI();
         PiBusiness piBus = di.getPiBusiness();
 
         PiRequest piRequest = new PiRequest();
-        piRequest.setContent("123");
+        piRequest.setRawNumber("9876543219");
         PiResponseResult piResponseResult = piBus.exec(piRequest);
 
-//        IPiValidation piValidation = new PiValidation();
-//        IPiBusiness piBusiness = new PiBusiness();
-//        PiRequest piRequest = _pi
+        if (piResponseResult.getError() != null){
+            System.out.println(piResponseResult.getError().getMessage());
+        }
+        else {
+            System.out.println("Ket qua : " + piResponseResult.getValue());
+        }
 
-
-        PiCalculation pi = new PiCalculation();
-        BigInteger res = pi.exec(new BigInteger("123456789123456789123465798123456798213546789123465879213645879132654879321654987321654987321654987321654987321654987"));
-        System.out.println("Ket qua : " + res.toString());
-
+        int x = 1;
         // dat van de ???
         // 1. Thuat toan can do chinh xac nhu the nao -> Ko can cao chi can (long)
         // 2. Limit of the number?

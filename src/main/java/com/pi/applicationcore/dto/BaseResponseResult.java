@@ -1,13 +1,14 @@
 package com.pi.applicationcore.dto;
 
 public class BaseResponseResult {
-    protected boolean status;
+    protected Error error;
 
-    public boolean getStatus() {
-        return status;
+    public Error getError() {
+        return error;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setError(Error error) {
+        this.error = error;
     }
+
 }
