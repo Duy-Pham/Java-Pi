@@ -2,7 +2,9 @@ package com.pi.calculation;
 
 import com.pi.applicationcore.business.PiBusiness;
 import com.pi.applicationcore.dto.PiRequest;
+import com.pi.applicationcore.dto.PiResponseResult;
 import com.pi.applicationcore.interfaces.IPiBusiness;
+import com.pi.di.BaseDI;
 import com.pi.lib.PiCalculation;
 
 import java.math.BigInteger;
@@ -25,6 +27,13 @@ public class App {
         // 4. Print to screen
 
         System.out.print( "Please input your n : " );
+
+        BaseDI di = new BaseDI();
+        IPiBusiness piBus = di.getPiBusiness();
+
+        PiRequest piRequest = new PiRequest();
+        piRequest.setContent("123");
+        PiResponseResult piResponseResult = piBus.exec(piRequest);
 
 //        IPiValidation piValidation = new PiValidation();
 //        IPiBusiness piBusiness = new PiBusiness();
