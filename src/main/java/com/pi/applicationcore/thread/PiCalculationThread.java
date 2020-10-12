@@ -1,13 +1,13 @@
-package com.pi.applicationcore.services;
+package com.pi.applicationcore.thread;
 
 import java.util.concurrent.Callable;
 
-public class PiCalculationServiceThread implements Callable<Double> {
+public class PiCalculationThread implements Callable<Double> {
     private final long _start;
     private final int _step;
     private final long _number;
 
-    public PiCalculationServiceThread(long start, int step, long number) {
+    public PiCalculationThread(long start, int step, long number) {
         _start = start;
         _step = step;
         _number = number;

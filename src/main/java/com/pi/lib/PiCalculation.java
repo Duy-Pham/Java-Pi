@@ -16,14 +16,14 @@ public class PiCalculation {
             re += -1.0/((j * 2) + 1.0);
         }
 
-        for (; i.compareTo(n) < 1; i.add(new BigInteger("1"))) {
-            BigInteger s = i.multiply(new BigInteger("2")).add(new BigInteger("1"));
-            if (isEvenNumber(i)) {
-                res = res.add(new BigInteger("1").divide(s));
-            } else {
-                res = res.add(new BigInteger("-1").divide(s));
-            }
-        }
+//        for (; i.compareTo(n) < 1; i.add(new BigInteger("1"))) {
+//            BigInteger s = i.multiply(new BigInteger("2")).add(new BigInteger("1"));
+//            if (isEvenNumber(i)) {
+//                res = res.add(new BigInteger("1").divide(s));
+//            } else {
+//                res = res.add(new BigInteger("-1").divide(s));
+//            }
+//        }
 
         return res;
     }
