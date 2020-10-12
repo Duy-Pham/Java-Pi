@@ -15,7 +15,7 @@ public class PiBusinessTest extends BaseTest {
 
     @Test
     public void execTest(){
-        PiBusiness piBus = piFactory.getPiBusiness();
+        PiBusiness piBus = piDI.getPiBusiness();
 
         PiRequest piRequest = new PiRequest();
         piRequest.setRawNumber("123456");

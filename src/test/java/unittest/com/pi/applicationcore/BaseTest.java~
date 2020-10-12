@@ -1,12 +1,12 @@
 package unittest.com.pi.applicationcore;
 
-import com.pi.di.PiDI;
+import com.pi.factory.PiFactory;
 
 //@Test
 public class BaseTest {
-    protected PiDI piDI;
+    protected PiFactory piFactory;
 
     public BaseTest(){
-        piDI = new PiDI();
+        piFactory = new PiFactory();
     }
 }

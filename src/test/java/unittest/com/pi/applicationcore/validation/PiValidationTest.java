@@ -14,7 +14,7 @@ public class PiValidationTest extends BaseTest {
 
     @Test
     public void validateTestFail(){
-        PiValidation piValidation = piFactory.getPiValidation();
+        PiValidation piValidation = piDI.getPiValidation();
 
         PiRequest piRequest = new PiRequest();
         piRequest.setRawNumber("123456s");
@@ -25,7 +25,7 @@ public class PiValidationTest extends BaseTest {
 
     @Test
     public void validateTestSuccess(){
-        PiValidation piValidation = piFactory.getPiValidation();
+        PiValidation piValidation = piDI.getPiValidation();
 
         PiRequest piRequest = new PiRequest();
         piRequest.setRawNumber("123456");
