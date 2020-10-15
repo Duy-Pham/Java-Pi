@@ -2,24 +2,31 @@ package com.pi.applicationcore.business;
 
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
-import com.pi.applicationcore.interfaces.PiCalculationBusiness;
-import com.pi.applicationcore.interfaces.PiValidation;
+import com.pi.applicationcore.interfaces.PiBusinessLocal;
+import com.pi.applicationcore.interfaces.PiCalculationBusinessLocal;
+import com.pi.applicationcore.interfaces.PiValidationLocal;
 
-public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusiness {
-    private final PiCalculationBusiness _piCalculationBusiness;
-    private final PiValidation _piValidation;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 
-    public PiBusiness(PiCalculationBusiness piCalculationBusiness, PiValidation piValidation) {
-        _piCalculationBusiness = piCalculationBusiness;
-        _piValidation = piValidation;
-    }
+@Stateless
+//@EJB(name="java:global:/MYSTUFF", beanInterface=PiBusinessLocal.class)
+public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusinessLocal {
+//    private final PiCalculationBusinessLocal _piCalculationBusinessLocal;
+//    private final PiValidationLocal _piValidationLocal;
+
+//    public PiBusiness(PiCalculationBusinessLocal piCalculationBusinessLocal, PiValidationLocal piValidationLocal) {
+//        _piCalculationBusinessLocal = piCalculationBusinessLocal;
+//        _piValidationLocal = piValidationLocal;
+//    }
 
     @Override
     public PiResponseResult exec(PiRequest request) {
-        PiResponseResult res = _piValidation.validate(request);
-        if (!res.hasError()) {
-            res = _piCalculationBusiness.exec(request);
-        }
-        return res;
+//        PiResponseResult res = _piValidationLocal.validate(request);
+//        if (!res.hasError()) {
+//            res = _piCalculationBusinessLocal.exec(request);
+//        }
+//        return res;
+        return null;
     }
 }

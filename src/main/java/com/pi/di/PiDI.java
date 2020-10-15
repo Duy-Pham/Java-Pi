@@ -1,32 +1,35 @@
 package com.pi.di;
 
-import com.pi.applicationcore.interfaces.PiBusiness;
-import com.pi.applicationcore.interfaces.PiCalculationBusiness;
-import com.pi.applicationcore.interfaces.PiValidation;
+import com.pi.applicationcore.business.PiBusiness;
+import com.pi.applicationcore.business.PiCalculationBusiness;
+import com.pi.applicationcore.interfaces.PiBusinessLocal;
+import com.pi.applicationcore.interfaces.PiCalculationBusinessLocal;
+import com.pi.applicationcore.interfaces.PiValidationLocal;
+import com.pi.applicationcore.validation.PiValidation;
 
 public class PiDI {
-    private PiBusiness _piBusiness;
-    private PiValidation _piValidation;
-    private PiCalculationBusiness _piCalculationBusiness;
+    private PiBusinessLocal _piBusinessLocal;
+    private PiValidationLocal _piValidationLocal;
+    private PiCalculationBusinessLocal _piCalculationBusinessLocal;
 
     public PiDI() {
         init();
     }
 
     private void init() {
-        _piValidation = new com.pi.applicationcore.validation.PiValidation();
-        _piCalculationBusiness = new com.pi.applicationcore.business.PiCalculationBusiness();
+        _piValidationLocal = new PiValidation();
+        _piCalculationBusinessLocal = new PiCalculationBusiness();
 
-        _piBusiness = new com.pi.applicationcore.business.PiBusiness(_piCalculationBusiness, _piValidation);
+//        _piBusinessLocal = new PiBusiness(_piCalculationBusinessLocal, _piValidationLocal);
     }
 
-    public PiBusiness getPiBusiness() {
-        return _piBusiness;
+    public PiBusinessLocal getPiBusiness() {
+        return _piBusinessLocal;
     }
-    public PiValidation getPiValidation() {
-        return _piValidation;
+    public PiValidationLocal getPiValidation() {
+        return _piValidationLocal;
     }
-    public PiCalculationBusiness getPiCalculationService() {
-        return _piCalculationBusiness;
+    public PiCalculationBusinessLocal getPiCalculationService() {
+        return _piCalculationBusinessLocal;
     }
 }

@@ -2,7 +2,7 @@ package com.pi.consoleui;
 
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
-import com.pi.applicationcore.interfaces.PiBusiness;
+import com.pi.applicationcore.interfaces.PiBusinessLocal;
 import com.pi.di.PiDI;
 
 import java.util.Scanner;
@@ -15,7 +15,7 @@ public class App {
 //        String number = in.nextLine();
 
         PiDI di = new PiDI();
-        PiBusiness piBus = di.getPiBusiness();
+        PiBusinessLocal piBus = di.getPiBusiness();
 
         PiRequest piRequest = new PiRequest();
 //        piRequest.setRawNumber(number);

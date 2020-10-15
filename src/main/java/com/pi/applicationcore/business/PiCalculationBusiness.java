@@ -4,6 +4,7 @@ import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
 import com.pi.applicationcore.thread.PiCalculationThread;
 
+import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -11,7 +12,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class PiCalculationBusiness implements com.pi.applicationcore.interfaces.PiCalculationBusiness {
+@Stateless
+public class PiCalculationBusiness implements com.pi.applicationcore.interfaces.PiCalculationBusinessLocal {
 
     @Override
     public PiResponseResult exec(PiRequest request) {

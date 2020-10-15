@@ -3,7 +3,10 @@ package com.pi.applicationcore.validation;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
 
-public class PiValidation implements com.pi.applicationcore.interfaces.PiValidation {
+import javax.ejb.Stateless;
+
+@Stateless
+public class PiValidation implements com.pi.applicationcore.interfaces.PiValidationLocal {
 
     @Override
     public PiResponseResult validate(PiRequest request) {

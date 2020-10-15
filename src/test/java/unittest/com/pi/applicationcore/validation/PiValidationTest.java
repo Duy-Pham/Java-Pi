@@ -2,7 +2,7 @@ package unittest.com.pi.applicationcore.validation;
 
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
-import com.pi.applicationcore.interfaces.PiValidation;
+import com.pi.applicationcore.interfaces.PiValidationLocal;
 import org.junit.Assert;
 import org.junit.Test;
 import unittest.com.pi.applicationcore.BaseTest;
@@ -14,22 +14,22 @@ public class PiValidationTest extends BaseTest {
 
     @Test
     public void validateTestFail(){
-        PiValidation piValidation = piDI.getPiValidation();
+        PiValidationLocal piValidationLocal = piDI.getPiValidation();
 
         PiRequest piRequest = new PiRequest();
         piRequest.setRawNumber("123456s");
-        PiResponseResult piResponseResult = piValidation.validate(piRequest);
+        PiResponseResult piResponseResult = piValidationLocal.validate(piRequest);
 
         Assert.assertEquals( "Your input is not correct.", piResponseResult.getError().getMessage());
     }
 
     @Test
     public void validateTestSuccess(){
-        PiValidation piValidation = piDI.getPiValidation();
+        PiValidationLocal piValidationLocal = piDI.getPiValidation();
 
         PiRequest piRequest = new PiRequest();
         piRequest.setRawNumber("123456");
-        PiResponseResult piResponseResult = piValidation.validate(piRequest);
+        PiResponseResult piResponseResult = piValidationLocal.validate(piRequest);
 
         Assert.assertEquals( false, piResponseResult.hasError());
     }
