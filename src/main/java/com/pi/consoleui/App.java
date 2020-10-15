@@ -1,4 +1,4 @@
-package com.pi.ui.consoleui;
+package com.pi.consoleui;
 
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
