@@ -31,7 +31,7 @@ public class PiValidationTest extends BaseTest {
         piRequest.setRawNumber("123456");
         PiResponseResult piResponseResult = piValidation.validate(piRequest);
 
-        Assert.assertEquals( null, piResponseResult.getError());
+        Assert.assertEquals( false, piResponseResult.hasError());
     }
 
 }

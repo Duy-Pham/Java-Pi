@@ -1,4 +1,4 @@
-package com.pi.consoleui;
+package com.pi.ui.consoleui;
 
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
@@ -12,17 +12,17 @@ public class App {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.print("Please input your number : ");
-        String number = in.nextLine();
+//        String number = in.nextLine();
 
         PiDI di = new PiDI();
         PiBusiness piBus = di.getPiBusiness();
 
         PiRequest piRequest = new PiRequest();
-        piRequest.setRawNumber(number);
-//        piRequest.setRawNumber("98765432191");
+//        piRequest.setRawNumber(number);
+        piRequest.setRawNumber("9876543");
         PiResponseResult piResponseResult = piBus.exec(piRequest);
 
-        if (piResponseResult.getError() != null) {
+        if (piResponseResult.hasError()) {
             System.out.println(piResponseResult.getError().getMessage());
         } else {
             System.out.println("Result : " + piResponseResult.getValue());

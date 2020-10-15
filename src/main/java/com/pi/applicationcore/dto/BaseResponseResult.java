@@ -11,4 +11,5 @@ public class BaseResponseResult {
         this.error = error;
     }
 
+    public boolean hasError() { return error != null; }
 }
