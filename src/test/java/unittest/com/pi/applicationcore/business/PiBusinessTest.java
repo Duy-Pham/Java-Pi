@@ -18,7 +18,7 @@ public class PiBusinessTest extends BaseTest {
         PiBusinessLocal piBus = piDI.getPiBusiness();
 
         PiRequest piRequest = new PiRequest();
-        piRequest.setRawNumber("123456");
+        piRequest.setRawNumber("1234567899");
         PiResponseResult piResponseResult = piBus.exec(piRequest);
 
         Assert.assertEquals( 0.7853961383844696, piResponseResult.getValue(), 16);
