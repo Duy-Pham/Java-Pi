@@ -1,7 +1,7 @@
 package com.pi.di;
 
 import com.pi.applicationcore.business.PiBusiness;
-import com.pi.applicationcore.formula.PiFormula;
+import com.pi.applicationcore.formula.PiCalculationFormula;
 import com.pi.applicationcore.interfaces.PiBusinessLocal;
 import com.pi.applicationcore.interfaces.PiFormulaLocal;
 import com.pi.applicationcore.interfaces.PiValidationLocal;
@@ -17,7 +17,7 @@ public class PiDI {
     }
 
     private void init() {
-        _piFormulaLocal = new PiFormula();
+        _piFormulaLocal = new PiCalculationFormula();
         _piValidationLocal = new PiValidation();
 
         _piBusinessLocal = new PiBusiness(_piValidationLocal, _piFormulaLocal);

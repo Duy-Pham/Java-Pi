@@ -8,4 +8,5 @@ import javax.ejb.Local;
 @Local
 public interface PiBusinessLocal {
     PiResponseResult exec(PiRequest request);
+    PiResponseResult stopAndGetResult();
 }

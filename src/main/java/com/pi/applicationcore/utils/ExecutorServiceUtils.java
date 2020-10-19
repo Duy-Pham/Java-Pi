@@ -1,13 +1,8 @@
 package com.pi.applicationcore.utils;
 
-import com.pi.applicationcore.thread.PiCalculationThread;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.*;
 
 public class ExecutorServiceUtils {
-
 
     public static void shutdownPool(ThreadPoolExecutor executor, boolean awaitTermination) throws InterruptedException {
 
