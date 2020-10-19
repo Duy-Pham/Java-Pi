@@ -34,7 +34,8 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusinessL
 
     @Override
     public PiResponseResult stopAndGetResult() {
-        var sum = stopAndGetResultFun();
+        _formulaLocal.stop();
+        var sum = _formulaLocal.getResult();
         var res = new PiResponseResult();
         res.setValue(sum);
         return res;
@@ -99,7 +100,12 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusinessL
 
         try {
 
-            var rr = executor.awaitTermination(1, TimeUnit.SECONDS);
+             _formulaLocal.getTasks()
+                    .stream()
+                    .filter(t -> !t.isDone())
+                    .forEach(t -> t.cancel(true));
+
+            var rr = executor.awaitTermination(5, TimeUnit.SECONDS);
             return _formulaLocal.stopAndGetResult();
 
 //            var sum = _formulaLocal.getResults();

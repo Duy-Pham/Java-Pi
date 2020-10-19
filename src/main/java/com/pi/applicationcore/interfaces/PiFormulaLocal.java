@@ -9,4 +9,7 @@ import java.util.concurrent.Future;
 public interface PiFormulaLocal {
     double exec(ExecutorService executorService, List<PiArray> arrData);
     double stopAndGetResult();
+    List<Future<Double>> getTasks();
+    void stop();
+    double getResult();
 }

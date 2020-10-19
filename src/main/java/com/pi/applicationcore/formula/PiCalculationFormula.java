@@ -2,18 +2,25 @@ package com.pi.applicationcore.formula;
 
 import com.pi.applicationcore.dto.PiArray;
 import com.pi.applicationcore.interfaces.PiFormulaLocal;
-import com.pi.applicationcore.utils.ExecutorServiceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PiCalculationFormula implements PiFormulaLocal {
-    public List<Future<Double>> futures = new ArrayList<>();
-    List<Double> aggregatedResults = new ArrayList<Double>();
+    public List<Future<Double>> futures;
+    List<Double> aggregatedResults;
+    private AtomicBoolean _isStop;
+
+    public PiCalculationFormula(){
+        futures = new ArrayList<>();
+        aggregatedResults = new ArrayList<Double>();
+        _isStop = new AtomicBoolean();
+    }
+
     @Override
     public double exec(ExecutorService executorService, List<PiArray> arrData) {
         try {
@@ -50,17 +57,41 @@ public class PiCalculationFormula implements PiFormulaLocal {
                 })
                 .reduce(0.0, Double::sum) + 1;
 
+var arrResult = aggregatedResults
+        .stream()
+        .reduce(0.0, Double::sum);
+
+sum += arrResult;
+
         return sum;
     }
 
+    @Override
+    public List<Future<Double>> getTasks() {
+        return futures;
+//        return null;
+    }
+
+    @Override
+    public void stop() {
+        _isStop.set(true);
+    }
+
+    @Override
+    public double getResult() {
+        return aggregatedResults
+                .stream()
+                .reduce(0.0, Double::sum) + 1;
+    }
+
     private List<PiCalculationFormulaThread> createRunableTasks(List<PiArray> piArrays){
-        List<PiCalculationFormulaThread> piCalculationThreads = new ArrayList<PiCalculationFormulaThread>();
+        List<PiCalculationFormulaThread> tasks = new ArrayList<PiCalculationFormulaThread>();
 
         for(var item : piArrays){
-            piCalculationThreads.add(new PiCalculationFormulaThread(item.getStart(), 1, item.getEnd()));
+            tasks.add(new PiCalculationFormulaThread(item.getStart(), 1, item.getEnd()));
         }
 
-        return piCalculationThreads;
+        return tasks;
     }
 
 
@@ -86,18 +117,48 @@ public class PiCalculationFormula implements PiFormulaLocal {
 
     public List<Double> executeAll(ExecutorService executor, List<PiCalculationFormulaThread> tasks) throws InterruptedException, ExecutionException {
 
+//        // new ways to exec tasks
+        //var indexOfTasks = 0;
+        var nThreads = 8;
 
-//        ((ThreadPoolExecutor)executor).getc
-        for(var task : tasks){
-            futures.add(executor.submit(task));
+        for(int indexOfTasks = 0, len = tasks.size(); indexOfTasks < len; indexOfTasks++){
+
+            if(_isStop.get() == false){
+                var task = tasks.get(indexOfTasks);
+                futures.add(executor.submit(task));
+                if (futures.size() >= nThreads * 5){
+                    var currentItemInFuture = 0;
+                    for(var future : futures){
+                        aggregatedResults.add(future.get());
+//                    currentItemInFuture++;
+//                    if(( futures.size() - currentItemInFuture) < nThreads){
+//                        break;
+//                    }
+                    }
+
+                    // bad version
+                    futures.clear();
+                }
+            }
+
         }
 
-//        futures = executor.invokeAll(tasks);
-        aggregatedResults = new ArrayList<Double>();
-        for (Future<Double> future : futures) {
+        // for items in
+        for(var future : futures){
             aggregatedResults.add(future.get());
         }
+
         return aggregatedResults;
+
+
+
+
+//        futures = executor.invokeAll(tasks);
+//        aggregatedResults = new ArrayList<Double>();
+//        for (Future<Double> future : futures) {
+//            aggregatedResults.add(future.get());
+//        }
+//        return aggregatedResults;
     }
 
 
