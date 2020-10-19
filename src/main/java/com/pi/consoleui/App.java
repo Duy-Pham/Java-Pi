@@ -53,7 +53,7 @@ public class App {
 //            String stop = in.nextLine();
                 if (stop.equalsIgnoreCase("y")){
                     var res = piBus.stopAndGetResult();
-                    System.out.println("ket qua : " + res.getValue());
+                    System.out.println("Result from user : " + res.getValue());
                 }
 
             } catch (IOException e) {
@@ -77,28 +77,6 @@ public class App {
                 },
                 2000
         );
-    }
-
-    private static void registerStopEvent(PiBusinessLocal piBus) {
-        final long start = System.currentTimeMillis();
-//        Runtime.getRuntime().ad
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                double hours = (System.currentTimeMillis() - start) / 3600000d;
-                System.out.println("Please enter the hourly rate");
-//                double hourlyRate = new Scanner(System.in).nextDouble();
-//                System.out.format("Program ran for %01.3f hours and cost $%02.2f", hours, hourlyRate * hours);
-
-                var res = piBus.stopAndGetResult();
-                System.out.println("ket qua : " + res.getValue());
-            }
-        }));
-//        try {
-//            Thread.sleep(Long.MAX_VALUE);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
     }
 
 }

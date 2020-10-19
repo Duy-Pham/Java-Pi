@@ -34,7 +34,7 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusinessL
 
     @Override
     public PiResponseResult stopAndGetResult() {
-        _formulaLocal.stop();
+        _formulaLocal.stopCalculate();
         var sum = _formulaLocal.getResult();
         var res = new PiResponseResult();
         res.setValue(sum);
@@ -76,62 +76,5 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusinessL
         }while (startIndex < n);
 
         return piArrays;
-    }
-
-    private double stopAndGetResultFun(){
-        var executor = _executorService;
-        //call shutdown to prevent new tasks from being submitted
-        executor.shutdown();
-
-        //get a reference to the Queue
-        final BlockingQueue<Runnable> blockingQueue = ((ThreadPoolExecutor)executor).getQueue();
-
-        //clear the Queue
-        blockingQueue.clear();
-        //or else copy its contents here with a while loop and remove()
-
-        //wait for active tasks to be completed
-//        try {
-//
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-
-        try {
-
-             _formulaLocal.getTasks()
-                    .stream()
-                    .filter(t -> !t.isDone())
-                    .forEach(t -> t.cancel(true));
-
-            var rr = executor.awaitTermination(5, TimeUnit.SECONDS);
-            return _formulaLocal.stopAndGetResult();
-
-//            var sum = _formulaLocal.getResults();
-//            return sum.stream().reduce(0.0, Double::sum) + 1;
-
-//            var tasks = _formulaLocal.getTasks();
-//            var completedTaskCount = tasks.stream().filter(t -> t.isDone()).count();
-//            var sum = tasks.stream()
-//                    .filter(t -> t.isDone())
-//                    .mapToDouble(d-> {
-//                        try {
-//                            return d.get();
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        } catch (ExecutionException e) {
-//                            e.printStackTrace();
-//                        }
-//                        return 0;
-//                    })
-//                    .reduce(0.0, Double::sum) + 1;
-//
-//            return sum;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return 0.0;
     }
 }
