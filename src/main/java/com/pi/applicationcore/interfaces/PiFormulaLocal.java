@@ -3,9 +3,9 @@ package com.pi.applicationcore.interfaces;
 import com.pi.applicationcore.dto.PiArray;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Callable;
 
 public interface PiFormulaLocal {
-    double exec(ExecutorService executorService, List<PiArray> arrData);
-    void stopCalculate();
+    List<Callable<Double>> createCallableTasks(List<PiArray> arrData);
+    double calculate(List<Double> resultTasks);
 }
