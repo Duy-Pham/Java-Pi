@@ -1,11 +1,10 @@
 package com.pi.api.servlets;
 
-import com.pi.applicationcore.business.PiBusiness;
+import com.pi.applicationcore.business.PiCalculationBusiness;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
 import com.pi.applicationcore.interfaces.PiBusinessLocal;
 
-import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -35,7 +34,7 @@ public class PiCalculationServlet extends HttpServlet {
         try {
             ctx = new InitialContext();
             _piBusinessLocal =
-                    (PiBusiness) ctx.lookup("java:comp/env/ejb/piBusiness");
+                    (PiCalculationBusiness) ctx.lookup("java:comp/env/ejb/piBusiness");
         } catch (NamingException e) {
             e.printStackTrace();
         }

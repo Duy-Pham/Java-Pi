@@ -17,22 +17,22 @@ public class App {
         PiBusinessLocal piBus = di.getPiBusiness();
 
         Scanner in = new Scanner(System.in);
-//        System.out.print("Please input your number : ");
+//        System.out.print("Please input your number: ");
 //        String number = in.nextLine();
 
-
         waitEventFromUser(piBus);
+
+        System.out.println();
 
         PiRequest piRequest = new PiRequest();
 //        piRequest.setRawNumber(number);
         piRequest.setRawNumber("9876543210");
         try {
             PiResponseResult piResponseResult = piBus.exec(piRequest);
-
             if (piResponseResult.hasError()) {
                 System.out.println(piResponseResult.getError().getMessage());
             } else {
-                System.out.println("Result : " + piResponseResult.getValue());
+                System.out.println("Result: " + piResponseResult.getValue());
             }
         }catch (Exception e){
 

@@ -7,9 +7,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import unittest.com.pi.applicationcore.BaseTest;
 
-public class PiBusinessTest extends BaseTest {
+public class PiCalculationBusinessTest extends BaseTest {
 
-    public PiBusinessTest(){
+    public PiCalculationBusinessTest(){
         super();
     }
 

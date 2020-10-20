@@ -14,7 +14,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Stateless
-public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusinessLocal {
+public class PiCalculationBusiness implements com.pi.applicationcore.interfaces.PiBusinessLocal {
     private final int LEN_OF_PI_ARR = 10000;
     private final int MAXIMUM_SIZE_OF_FUTURE = 50;
 
@@ -23,7 +23,7 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusinessL
     private static ExecutorService _executorService;
     private AtomicBoolean _isStop;
 
-    public PiBusiness(PiValidationLocal piValidationLocal, PiFormulaLocal formulaLocal) {
+    public PiCalculationBusiness(PiValidationLocal piValidationLocal, PiFormulaLocal formulaLocal) {
         _piValidationLocal = piValidationLocal;
         _formulaLocal = formulaLocal;
         _isStop = new AtomicBoolean();
