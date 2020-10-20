@@ -33,12 +33,8 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusinessL
     }
 
     @Override
-    public PiResponseResult stopAndGetResult() {
+    public void stop() {
         _formulaLocal.stopCalculate();
-        var sum = _formulaLocal.getResult();
-        var res = new PiResponseResult();
-        res.setValue(sum);
-        return res;
     }
 
     private PiResponseResult cal(PiRequest request) {
@@ -61,19 +57,19 @@ public class PiBusiness implements com.pi.applicationcore.interfaces.PiBusinessL
 
     private List<PiArray> createArrItems(PiRequest request){
         List<PiArray> piArrays = new ArrayList<>();
-        long n = request.getValue();
+        long number = request.getValue();
         long startIndex = 1;
 
         do{
             PiArray piArray = new PiArray();
             piArray.setStart(startIndex);
             startIndex += LEN_OF_PI_ARR;
-            if (startIndex > n) {
-                startIndex = n;
+            if (startIndex > number) {
+                startIndex = number;
             }
             piArray.setEnd(startIndex);
             piArrays.add(piArray);
-        }while (startIndex < n);
+        }while (startIndex < number);
 
         return piArrays;
     }

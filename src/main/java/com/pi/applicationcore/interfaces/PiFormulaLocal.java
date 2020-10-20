@@ -8,5 +8,4 @@ import java.util.concurrent.ExecutorService;
 public interface PiFormulaLocal {
     double exec(ExecutorService executorService, List<PiArray> arrData);
     void stopCalculate();
-    double getResult();
 }

@@ -13,15 +13,14 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
+        PiDI di = new PiDI();
+        PiBusinessLocal piBus = di.getPiBusiness();
+
         Scanner in = new Scanner(System.in);
 //        System.out.print("Please input your number : ");
 //        String number = in.nextLine();
 
-        PiDI di = new PiDI();
-        PiBusinessLocal piBus = di.getPiBusiness();
 
-//        registerStopEvent(piBus);
-//        autoShutdown(piBus);
         waitEventFromUser(piBus);
 
         PiRequest piRequest = new PiRequest();
@@ -43,40 +42,20 @@ public class App {
 
     private static void waitEventFromUser(PiBusinessLocal piBus){
         new Thread(() -> {
-            System.out.println("Press y to stop and get immediate results without high precision");
+            System.out.print("Press y to stop and get immediate results without high precision: ");
             var reader = new BufferedReader(new InputStreamReader(System.in));
-            String stop = null;
             try {
-                stop = reader.readLine();
+                String stop = reader.readLine();
 
-                //            Scanner in = new Scanner(System.in);
-//            String stop = in.nextLine();
                 if (stop.equalsIgnoreCase("y")){
-                    var res = piBus.stopAndGetResult();
-                    System.out.println("Result from user : " + res.getValue());
+                    piBus.stop();
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-
         }).start();
-    }
-
-    private static void autoShutdown(PiBusinessLocal piBus) {
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        // your code here
-                        System.out.println("----ket qua----");
-                        var res = piBus.stopAndGetResult();
-                        System.out.println("ket qua : " + res.getValue());
-                    }
-                },
-                2000
-        );
     }
 
 }

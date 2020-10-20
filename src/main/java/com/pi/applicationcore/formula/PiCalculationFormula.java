@@ -23,7 +23,7 @@ public class PiCalculationFormula implements PiFormulaLocal {
     @Override
     public double exec(ExecutorService executorService, List<PiArray> arrData) {
         try {
-            var tasks = createRunableTasks(arrData);
+            var tasks = createTasks(arrData);
             double sum = executeAll(executorService, tasks)
                     .stream()
                     .reduce(0.0, Double::sum) + 1;
@@ -44,14 +44,7 @@ public class PiCalculationFormula implements PiFormulaLocal {
         _isStop.set(true);
     }
 
-    @Override
-    public double getResult() {
-        return _aggregatedResults
-                .stream()
-                .reduce(0.0, Double::sum) + 1;
-    }
-
-    private List<PiCalculationFormulaThread> createRunableTasks(List<PiArray> piArrays){
+    private List<PiCalculationFormulaThread> createTasks(List<PiArray> piArrays){
         List<PiCalculationFormulaThread> tasks = new ArrayList<PiCalculationFormulaThread>();
 
         for(var item : piArrays){
@@ -61,7 +54,7 @@ public class PiCalculationFormula implements PiFormulaLocal {
         return tasks;
     }
 
-    public List<Double> executeAll(ExecutorService executor, List<PiCalculationFormulaThread> tasks) throws InterruptedException, ExecutionException {
+    private List<Double> executeAll(ExecutorService executor, List<PiCalculationFormulaThread> tasks) throws InterruptedException, ExecutionException {
         List<Future<Double>> futures = new ArrayList<>();
 
         for(int indexOfTasks = 0, len = tasks.size(); indexOfTasks < len && !_isStop.get(); indexOfTasks++){
@@ -82,6 +75,5 @@ public class PiCalculationFormula implements PiFormulaLocal {
 
         return _aggregatedResults;
     }
-
 
 }
