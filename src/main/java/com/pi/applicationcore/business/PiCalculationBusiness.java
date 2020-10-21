@@ -3,25 +3,22 @@ package com.pi.applicationcore.business;
 import com.pi.applicationcore.dto.PiArray;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
-import com.pi.applicationcore.formula.PiCalculationFormulaThread;
 import com.pi.applicationcore.interfaces.PiFormulaLocal;
 import com.pi.applicationcore.interfaces.PiValidationLocal;
 
-import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@Stateless
 public class PiCalculationBusiness implements com.pi.applicationcore.interfaces.PiBusinessLocal {
     private final int LEN_OF_PI_ARR = 10000;
     private final int MAXIMUM_SIZE_OF_FUTURE = 50;
 
     private final PiValidationLocal _piValidationLocal;
     private final PiFormulaLocal _formulaLocal;
-    private static ExecutorService _executorService;
-    private AtomicBoolean _isStop;
+    private ExecutorService _executorService;
+    private final AtomicBoolean _isStop;
 
     public PiCalculationBusiness(PiValidationLocal piValidationLocal, PiFormulaLocal formulaLocal) {
         _piValidationLocal = piValidationLocal;
@@ -45,7 +42,7 @@ public class PiCalculationBusiness implements com.pi.applicationcore.interfaces.
 
     private PiResponseResult cal(PiRequest request) {
         try {
-            List<Double> resultTasks = null;
+            List<Double> resultTasks;
             _executorService = createThreadPool();
             List<PiArray> piArrs = createArrItems(request);
 
@@ -56,9 +53,7 @@ public class PiCalculationBusiness implements com.pi.applicationcore.interfaces.
             PiResponseResult piResponseResult = new PiResponseResult();
             piResponseResult.setValue(result);
             return piResponseResult;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -67,8 +62,7 @@ public class PiCalculationBusiness implements com.pi.applicationcore.interfaces.
 
     private ExecutorService createThreadPool(){
         int procNb = Runtime.getRuntime().availableProcessors();
-        var executorService = Executors.newFixedThreadPool(procNb);
-        return executorService;
+        return Executors.newFixedThreadPool(procNb);
     }
 
     private List<PiArray> createArrItems(PiRequest request){

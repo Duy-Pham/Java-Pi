@@ -14,7 +14,7 @@ public class PiCalculationFormulaThread implements Callable<Double> {
     }
 
     @Override
-    public Double call() throws Exception {
+    public Double call() {
         double res = 0.0;
         for (long i = _start; i < _number; i += _step) {
             if (isEvenNumber(i)) {
