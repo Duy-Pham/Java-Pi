@@ -3,6 +3,7 @@ package unittest.com.pi.applicationcore.business;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
 import com.pi.applicationcore.interfaces.PiCalculationBusinessLocal;
+import com.pi.applicationcore.interfaces.PiValidationLocal;
 import org.junit.Assert;
 import org.junit.Test;
 import unittest.com.pi.applicationcore.BaseTest;
@@ -35,5 +36,16 @@ public class PiCalculationBusinessTest extends BaseTest {
         piResponseResult = piCalculationBusinessLocal.executeCalculate(piRequest);
         res = piResponseResult.getValue();
         Assert.assertEquals( 0.7853981613723504, piResponseResult.getValue(), 0.000000000001);
+    }
+
+    @Test
+    public void execTestFailForNegative() throws ExecutionException, InterruptedException {
+        PiCalculationBusinessLocal piCalculationBusinessLocal = piDI.getPiBusiness();
+
+        PiRequest piRequest = new PiRequest();
+        piRequest.setRawNumber("-10");
+        PiResponseResult piResponseResult = piCalculationBusinessLocal.executeCalculate(piRequest);
+
+        Assert.assertEquals( "Your input is not correct.", piResponseResult.getError().getMessage());
     }
 }

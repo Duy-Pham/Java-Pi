@@ -3,12 +3,10 @@ package com.pi.applicationcore.validation;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
 
-import javax.ejb.Stateless;
 
 /**
  * The PiValidation is an implementation for the PiValidationLocal interface.
  */
-@Stateless
 public class PiValidation implements com.pi.applicationcore.interfaces.PiValidationLocal {
 
     /**

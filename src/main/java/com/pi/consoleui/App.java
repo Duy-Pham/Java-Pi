@@ -32,12 +32,9 @@ public class App {
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please input your number: ");
-//        String number = scanner.nextLine();
-        String number = "123456789";
+        String number = scanner.nextLine();
 
-        double ss = execFunc(number);
         registerEventFromUser(piCalculationBusinessLocal);
-
         System.out.println();
 
         PiRequest piRequest = new PiRequest();
@@ -79,27 +76,6 @@ public class App {
             }
 
         }).start();
-    }
-
-    private static double execFunc(String value){
-
-        long number = Long.parseLong(value);
-        double res = 0.0;
-
-        for(long i = 0; i <= number; i++) {
-            if (isEvenNumber(i)) {
-                res += 1.0 / ((2.0 * i) + 1.0);
-            } else {
-                res += -1.0 / ((2.0 * i) + 1.0);
-            }
-        }
-
-
-        return res;
-    }
-
-    private static boolean isEvenNumber(long number) {
-        return number % 2 == 0;
     }
 
 }
