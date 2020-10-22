@@ -2,31 +2,31 @@ package com.pi.di;
 
 import com.pi.applicationcore.business.PiCalculationBusiness;
 import com.pi.applicationcore.formula.PiCalculationFormula;
-import com.pi.applicationcore.interfaces.PiBusinessLocal;
+import com.pi.applicationcore.interfaces.PiCalculationBusinessLocal;
 import com.pi.applicationcore.interfaces.PiFormulaLocal;
 import com.pi.applicationcore.interfaces.PiValidationLocal;
 import com.pi.applicationcore.validation.PiValidation;
 
 public class PiDI {
-    private PiBusinessLocal _piBusinessLocal;
-    private PiValidationLocal _piValidationLocal;
-    private PiFormulaLocal _piFormulaLocal;
+    private PiCalculationBusinessLocal piCalculationBusinessLocal;
+    private PiValidationLocal piValidationLocal;
+    private PiFormulaLocal piFormulaLocal;
 
     public PiDI() {
         init();
     }
 
     private void init() {
-        _piFormulaLocal = new PiCalculationFormula();
-        _piValidationLocal = new PiValidation();
+        piFormulaLocal = new PiCalculationFormula();
+        piValidationLocal = new PiValidation();
 
-        _piBusinessLocal = new PiCalculationBusiness(_piValidationLocal, _piFormulaLocal);
+        piCalculationBusinessLocal = new PiCalculationBusiness(piValidationLocal, piFormulaLocal);
     }
 
-    public PiBusinessLocal getPiBusiness() {
-        return _piBusinessLocal;
+    public PiCalculationBusinessLocal getPiBusiness() {
+        return piCalculationBusinessLocal;
     }
     public PiValidationLocal getPiValidation() {
-        return _piValidationLocal;
+        return piValidationLocal;
     }
 }

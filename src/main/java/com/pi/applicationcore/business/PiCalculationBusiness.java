@@ -1,63 +1,62 @@
 package com.pi.applicationcore.business;
 
-import com.pi.applicationcore.dto.PiArray;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
+import com.pi.applicationcore.interfaces.PiCalculationBusinessLocal;
 import com.pi.applicationcore.interfaces.PiFormulaLocal;
 import com.pi.applicationcore.interfaces.PiValidationLocal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Future;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class PiCalculationBusiness implements com.pi.applicationcore.interfaces.PiBusinessLocal {
-    private final int LEN_OF_PI_ARR = 10000;
-    private final int MAXIMUM_SIZE_OF_FUTURE = 50;
+public class PiCalculationBusiness implements PiCalculationBusinessLocal {
+    private final int SIZE_OF_TASK = 10000;
+    private final int SIZE_OF_A_MINI_CALCULATE = 50;
 
-    private final PiValidationLocal _piValidationLocal;
-    private final PiFormulaLocal _formulaLocal;
-    private ExecutorService _executorService;
-    private final AtomicBoolean _isStop;
+    private final PiValidationLocal piValidationLocal;
+    private final PiFormulaLocal piFormulaLocal;
+    private ExecutorService executorService;
+    private final AtomicBoolean isStop;
+    private long currentNumber;
 
-    public PiCalculationBusiness(PiValidationLocal piValidationLocal, PiFormulaLocal formulaLocal) {
-        _piValidationLocal = piValidationLocal;
-        _formulaLocal = formulaLocal;
-        _isStop = new AtomicBoolean();
+    public PiCalculationBusiness(PiValidationLocal piValidationLocal, PiFormulaLocal piFormulaLocal) {
+        this.piValidationLocal = piValidationLocal;
+        this.piFormulaLocal = piFormulaLocal;
+        this.isStop = new AtomicBoolean();
     }
 
     @Override
-    public PiResponseResult exec(PiRequest request) {
-        PiResponseResult res = _piValidationLocal.validate(request);
-        if (!res.hasError()) {
-            res = cal(request);
+    public PiResponseResult execCalculate(PiRequest request) throws ExecutionException, InterruptedException {
+        PiResponseResult piResponseResult = piValidationLocal.validate(request);
+        if (!piResponseResult.hasError()) {
+            piResponseResult = calculate(request);
         }
-        return res;
+        return piResponseResult;
     }
 
     @Override
-    public void stop() {
-        _isStop.set(true);
+    public void stopCalculate() {
+        isStop.set(true);
     }
 
-    private PiResponseResult cal(PiRequest request) {
-        try {
-            List<Double> resultTasks;
-            _executorService = createThreadPool();
-            List<PiArray> piArrs = createArrItems(request);
+    @Override
+    public long getCurrentNumber() {
+        return currentNumber;
+    }
 
-            var callableTasks = _formulaLocal.createCallableTasks(piArrs);
-            resultTasks = executeAll(_executorService, callableTasks);
-            var result = _formulaLocal.calculate(resultTasks);
+    private PiResponseResult calculate(PiRequest request) throws ExecutionException, InterruptedException {
+        executorService = createThreadPool();
+        double result = executeAll(executorService, request.getValue());
 
-            PiResponseResult piResponseResult = new PiResponseResult();
-            piResponseResult.setValue(result);
-            return piResponseResult;
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        PiResponseResult piResponseResult = new PiResponseResult();
+        piResponseResult.setValue(result);
+        return piResponseResult;
     }
 
     private ExecutorService createThreadPool(){
@@ -65,45 +64,42 @@ public class PiCalculationBusiness implements com.pi.applicationcore.interfaces.
         return Executors.newFixedThreadPool(procNb);
     }
 
-    private List<PiArray> createArrItems(PiRequest request){
-        List<PiArray> piArrays = new ArrayList<>();
-        long number = request.getValue();
-        long startIndex = 1;
-
-        do{
-            PiArray piArray = new PiArray();
-            piArray.setStart(startIndex);
-            startIndex += LEN_OF_PI_ARR;
-            if (startIndex > number) {
-                startIndex = number;
-            }
-            piArray.setEnd(startIndex);
-            piArrays.add(piArray);
-        }while (startIndex < number);
-
-        return piArrays;
-    }
-
-    private List<Double> executeAll(ExecutorService executor, List<Callable<Double>> tasks) throws InterruptedException, ExecutionException {
-        List<Double> aggregatedResults = new ArrayList<>();
+    private double executeAll(ExecutorService executor, long number) throws InterruptedException, ExecutionException {
         List<Future<Double>> futures = new ArrayList<>();
+        double currentResult = 0;
 
-        for(int indexOfTasks = 0, len = tasks.size(); indexOfTasks < len && !_isStop.get(); indexOfTasks++){
-            var task = tasks.get(indexOfTasks);
+        for(long startIndex = 0; startIndex < number && !isStop.get(); startIndex += SIZE_OF_TASK){
+            Callable<Double> task = createTask(startIndex, number);
             futures.add(executor.submit(task));
-            if (futures.size() >= MAXIMUM_SIZE_OF_FUTURE){
-                for(var future : futures){
-                    aggregatedResults.add(future.get());
-                }
+
+            if (futures.size() >= SIZE_OF_A_MINI_CALCULATE){
+                currentResult = getCurrentResult(futures, currentResult);
                 futures.clear();
             }
         }
 
-        // for items in
-        for(var future : futures){
-            aggregatedResults.add(future.get());
+        currentResult = getCurrentResult(futures, currentResult);
+        return currentResult;
+    }
+
+    private double getCurrentResult(List<Future<Double>> futures, double currentResult) throws InterruptedException, ExecutionException {
+        for (Future<Double> future : futures) {
+            currentResult = piFormulaLocal.calculateResult(currentResult, future.get());
+        }
+        return currentResult;
+    }
+
+    private Callable<Double> createTask(long startIndex, long number) {
+        long endIndex = startIndex + SIZE_OF_TASK;
+        if (endIndex > number) {
+            endIndex = number;
         }
 
-        return aggregatedResults;
+        updateCurrentNumberCalculated(endIndex);
+        return piFormulaLocal.createCallableTask(startIndex, endIndex);
+    }
+
+    private void updateCurrentNumberCalculated(long number) {
+        currentNumber = number;
     }
 }

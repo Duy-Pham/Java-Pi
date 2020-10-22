@@ -2,21 +2,19 @@ package com.pi.applicationcore.formula;
 
 import java.util.concurrent.Callable;
 
-public class PiCalculationFormulaThread implements Callable<Double> {
-    private final long _start;
-    private final int _step;
-    private final long _number;
+public class PiCalculationFormulaCallable implements Callable<Double> {
+    private final long start;
+    private final long end;
 
-    public PiCalculationFormulaThread(long start, int step, long number) {
-        _start = start;
-        _step = step;
-        _number = number;
+    public PiCalculationFormulaCallable(long start, long end) {
+        this.start = start;
+        this.end = end;
     }
 
     @Override
     public Double call() {
         double res = 0.0;
-        for (long i = _start; i < _number; i += _step) {
+        for (long i = start; i < end; i++) {
             if (isEvenNumber(i)) {
                 res += 1.0 / (2.0 * i + 1.0);
             } else {
@@ -30,4 +28,5 @@ public class PiCalculationFormulaThread implements Callable<Double> {
     private boolean isEvenNumber(long number) {
         return number % 2 == 0;
     }
+
 }
