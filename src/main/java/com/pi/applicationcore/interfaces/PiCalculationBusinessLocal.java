@@ -3,12 +3,33 @@ package com.pi.applicationcore.interfaces;
 import com.pi.applicationcore.dto.PiRequest;
 import com.pi.applicationcore.dto.PiResponseResult;
 
-import javax.ejb.Local;
 import java.util.concurrent.ExecutionException;
 
-@Local
+
+/**
+ * The Interface PiCalculationBusinessLocal represents the actions supported for the calculation business.
+ */
 public interface PiCalculationBusinessLocal {
-    PiResponseResult execCalculate(PiRequest request) throws ExecutionException, InterruptedException;
+    
+    /**
+     * Execute calculate for the pi request.
+     *
+     * @param request the pi request
+     * @return the result after calculate
+     * @throws ExecutionException the execution exception
+     * @throws InterruptedException the interrupted exception
+     */
+    PiResponseResult executeCalculate(PiRequest request) throws ExecutionException, InterruptedException;
+    
+    /**
+     * Stop calculating when we don't want to calculate the number.
+     */
     void stopCalculate();
-    long getCurrentNumber();
+    
+    /**
+     * Gets the number have calculated.
+     *
+     * @return the number calculated
+     */
+    long getNumberCalculated();
 }

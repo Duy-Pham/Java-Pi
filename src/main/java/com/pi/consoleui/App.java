@@ -12,18 +12,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
+/**
+ * The main console app.
+ */
 public class App {
 
+    /** The logger. */
     private static final Logger logger = LogManager.getLogger(App.class);
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
         logger.info("Server started");
-        PiDI di = new PiDI();
-        PiCalculationBusinessLocal piCalculationBusinessLocal = di.getPiBusiness();
+        PiDI piDI = new PiDI();
+        PiCalculationBusinessLocal piCalculationBusinessLocal = piDI.getPiBusiness();
 
-        Scanner in = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Please input your number: ");
-        String number = in.nextLine();
+        String number = scanner.nextLine();
 
         registerEventFromUser(piCalculationBusinessLocal);
 
@@ -32,7 +41,7 @@ public class App {
         PiRequest piRequest = new PiRequest();
         piRequest.setRawNumber(number);
         try {
-            PiResponseResult piResponseResult = piCalculationBusinessLocal.execCalculate(piRequest);
+            PiResponseResult piResponseResult = piCalculationBusinessLocal.executeCalculate(piRequest);
             if (piResponseResult.hasError()) {
                 System.out.println(piResponseResult.getError().getMessage());
             } else {
@@ -44,6 +53,11 @@ public class App {
         }
     }
 
+    /**
+     * Register event from user.
+     *
+     * @param piCalculationBusinessLocal the pi calculation business local
+     */
     private static void registerEventFromUser(PiCalculationBusinessLocal piCalculationBusinessLocal){
         new Thread(() -> {
             System.out.print("Press y to stop and get immediate results without high precision: ");
@@ -53,8 +67,8 @@ public class App {
 
                 if (stop.equalsIgnoreCase("y")){
                     piCalculationBusinessLocal.stopCalculate();
-                    long currentCalculateNumber = piCalculationBusinessLocal.getCurrentNumber();
-                    System.out.println("Calculate for number: " + currentCalculateNumber);
+                    long numberCalculated = piCalculationBusinessLocal.getNumberCalculated();
+                    System.out.println("Calculate for number: " + numberCalculated);
                 }
 
             } catch (IOException e) {

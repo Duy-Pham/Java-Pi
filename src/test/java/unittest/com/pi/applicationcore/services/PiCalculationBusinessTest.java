@@ -17,7 +17,7 @@
 //
 //        PiRequest piRequest = new PiRequest();
 //        piRequest.setValue(123456);
-//        PiResponseResult piResponseResult = piCalculationBusinessLocal.execCalculate(piRequest);
+//        PiResponseResult piResponseResult = piCalculationBusinessLocal.executeCalculate(piRequest);
 //
 //        Assert.assertEquals( 0.7853961383844696, piResponseResult.getValue(), 16);
 //    }
