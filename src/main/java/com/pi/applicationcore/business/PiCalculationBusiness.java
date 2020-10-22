@@ -33,7 +33,7 @@ public class PiCalculationBusiness implements PiCalculationBusinessLocal {
     /** The pi formula local. */
     private final PiFormulaLocal piFormulaLocal;
 
-    /** The is stop. */
+    /** The is stop. True if we want stop calculate. */
     private final AtomicBoolean isStop;
     
     /** The number calculated. */

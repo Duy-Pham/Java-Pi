@@ -22,17 +22,25 @@ public class PiValidation implements com.pi.applicationcore.interfaces.PiValidat
             long value = Long.parseLong(request.getRawNumber(), 10);
 
             if (value < 0){
-                result = errorMessage(result);
+                result = addErrorMessage(result);
             }
 
             request.setValue(value);
         } catch (NumberFormatException e) {
-            result = errorMessage(result);
+            result = addErrorMessage(result);
         }
         return result;
     }
 
-    private PiResponseResult errorMessage(PiResponseResult result) {
+    
+    
+    /**
+     * Adds error message.
+     *
+     * @param result the result
+     * @return the pi response result
+     */
+    private PiResponseResult addErrorMessage(PiResponseResult result) {
         Error error = new Error("Your input is not correct.");
         result.setError(error);
         return result;
