@@ -20,9 +20,20 @@ public class PiCalculationBusinessTest extends BaseTest {
         PiCalculationBusinessLocal piCalculationBusinessLocal = piDI.getPiBusiness();
 
         PiRequest piRequest = new PiRequest();
-        piRequest.setRawNumber("1234567899");
+        piRequest.setRawNumber("0");
         PiResponseResult piResponseResult = piCalculationBusinessLocal.executeCalculate(piRequest);
 
-        Assert.assertEquals( 0.7853961383844696, piResponseResult.getValue(), 16);
+        double res = piResponseResult.getValue();
+        Assert.assertEquals( 1.0, piResponseResult.getValue(), 0.000000000001);
+
+        piRequest.setRawNumber("1000");
+        piResponseResult = piCalculationBusinessLocal.executeCalculate(piRequest);
+        res = piResponseResult.getValue();
+        Assert.assertEquals( 0.7856479135848861, piResponseResult.getValue(), 0.000000000001);
+
+        piRequest.setRawNumber("123456789");
+        piResponseResult = piCalculationBusinessLocal.executeCalculate(piRequest);
+        res = piResponseResult.getValue();
+        Assert.assertEquals( 0.7853981613723504, piResponseResult.getValue(), 0.000000000001);
     }
 }

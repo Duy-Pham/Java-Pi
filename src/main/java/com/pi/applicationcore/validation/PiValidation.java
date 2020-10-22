@@ -22,11 +22,21 @@ public class PiValidation implements com.pi.applicationcore.interfaces.PiValidat
         PiResponseResult result = new PiResponseResult();
         try {
             long value = Long.parseLong(request.getRawNumber(), 10);
+
+            if (value < 0){
+                result = errorMessage(result);
+            }
+
             request.setValue(value);
         } catch (NumberFormatException e) {
-            Error error = new Error("Your input is not correct.");
-            result.setError(error);
+            result = errorMessage(result);
         }
+        return result;
+    }
+
+    private PiResponseResult errorMessage(PiResponseResult result) {
+        Error error = new Error("Your input is not correct.");
+        result.setError(error);
         return result;
     }
 }

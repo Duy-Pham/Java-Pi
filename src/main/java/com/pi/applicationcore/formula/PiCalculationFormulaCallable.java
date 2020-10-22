@@ -34,9 +34,9 @@ public class PiCalculationFormulaCallable implements Callable<Double> {
         double res = 0.0;
         for (long i = start; i < end; i++) {
             if (isEvenNumber(i)) {
-                res += 1.0 / (2.0 * i + 1.0);
+                res += 1.0 / ((2.0 * i) + 1.0);
             } else {
-                res += -1.0 / (2.0 * i + 1.0);
+                res += -1.0 / ((2.0 * i) + 1.0);
             }
         }
 

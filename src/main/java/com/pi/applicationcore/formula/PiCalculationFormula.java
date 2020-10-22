@@ -31,9 +31,6 @@ public class PiCalculationFormula implements PiFormulaLocal {
      */
     @Override
     public double calculateResult(double currentResult, double newResult) {
-        if (currentResult == 0.0)
-            currentResult = 1.0;
-
         return currentResult + newResult;
     }
 

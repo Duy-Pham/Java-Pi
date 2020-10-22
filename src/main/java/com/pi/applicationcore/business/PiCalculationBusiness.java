@@ -22,20 +22,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class PiCalculationBusiness implements PiCalculationBusinessLocal {
     
     /** The size of task. */
-    private final int SIZE_OF_TASK = 10000;
+    private final int SIZE_OF_TASK = 1000000;
     
     /** The size of a mini calculate. */
-    private final int SIZE_OF_A_MINI_CALCULATE = 50;
+    private final int SIZE_OF_A_MINI_CALCULATE = 100;
 
     /** The pi validation local. */
     private final PiValidationLocal piValidationLocal;
     
     /** The pi formula local. */
     private final PiFormulaLocal piFormulaLocal;
-    
-    /** The executor service. */
-    private ExecutorService executorService;
-    
+
     /** The is stop. */
     private final AtomicBoolean isStop;
     
@@ -98,7 +95,7 @@ public class PiCalculationBusiness implements PiCalculationBusinessLocal {
      * @throws InterruptedException the interrupted exception
      */
     private PiResponseResult calculate(PiRequest request) throws ExecutionException, InterruptedException {
-        executorService = createThreadPool();
+        ExecutorService executorService = createThreadPool();
         double result = execute(executorService, request.getValue());
 
         PiResponseResult piResponseResult = new PiResponseResult();
@@ -127,9 +124,9 @@ public class PiCalculationBusiness implements PiCalculationBusinessLocal {
      */
     private double execute(ExecutorService executor, long number) throws InterruptedException, ExecutionException {
         List<Future<Double>> futures = new ArrayList<>();
-        double currentResult = 0;
+        double currentResult = 0.0;
 
-        for(long startIndex = 0; startIndex < number && !isStop.get(); startIndex += SIZE_OF_TASK){
+        for(long startIndex = 0; startIndex <= number && !isStop.get(); startIndex += SIZE_OF_TASK){
             Callable<Double> task = createTask(startIndex, number);
             futures.add(executor.submit(task));
 
@@ -169,7 +166,7 @@ public class PiCalculationBusiness implements PiCalculationBusinessLocal {
     private Callable<Double> createTask(long startIndex, long number) {
         long endIndex = startIndex + SIZE_OF_TASK;
         if (endIndex > number) {
-            endIndex = number;
+            endIndex = number + 1;
         }
 
         updateNumberCalculated(endIndex);

@@ -24,6 +24,17 @@ public class PiValidationTest extends BaseTest {
     }
 
     @Test
+    public void validateTestFailForNegative(){
+        PiValidationLocal piValidationLocal = piDI.getPiValidation();
+
+        PiRequest piRequest = new PiRequest();
+        piRequest.setRawNumber("-10");
+        PiResponseResult piResponseResult = piValidationLocal.validate(piRequest);
+
+        Assert.assertEquals( "Your input is not correct.", piResponseResult.getError().getMessage());
+    }
+
+    @Test
     public void validateTestSuccess(){
         PiValidationLocal piValidationLocal = piDI.getPiValidation();
 
